@@ -1,0 +1,39 @@
+# Host UX for the fred demo app. Requires Task: https://taskfile.dev
+# Prefer running under docker-mise-cluster (task up:fred). Standalone helpers below.
+# Install Task via mise from the cluster root, or: https://taskfile.dev/installation/
+
+version: "3"
+
+tasks:
+  default:
+    desc: List available tasks
+    cmds:
+      - task --list
+
+  setup:
+    desc: bundle install + db:prepare
+    cmds:
+      - bundle install
+      - bin/rails db:prepare
+
+  server:
+    desc: "bin/rails server (task server -- -p 3000)"
+    interactive: true
+    cmds:
+      - bin/rails server {{.CLI_ARGS}}
+
+  console:
+    desc: bin/rails console
+    interactive: true
+    cmds:
+      - bin/rails console
+
+  test:js:
+    desc: Vitest (requires yarn install at cluster root workspaces)
+    cmds:
+      - yarn test
+
+  lint:
+    desc: RuboCop via bin/rubocop
+    cmds:
+      - bin/rubocop {{.CLI_ARGS}}

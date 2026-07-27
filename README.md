@@ -9,10 +9,12 @@ This repo is a **git submodule** of `docker-mise-cluster` at path `fred/`.
 ```bash
 # from cluster root
 git submodule update --init --recursive
-bin/setup
-bin/compose up fred
+task setup                 # or bin/setup
+task up:fred               # or bin/compose up fred
 # via nginx: http://localhost:8080/fred/
 ```
+
+In this app directory, `task setup` / `task server` wrap bundle + Rails (Task pinned in `mise.toml`).
 
 Development expects the cluster Postgres/Redis services (`DATABASE_URL`, `REDIS_URL`) when run under compose.
 

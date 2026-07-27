@@ -9,3 +9,5 @@ idiomatic_version_file_enable_tools = ["ruby"]
 
 [tools]
 # No ruby pin — version comes from the Gemfile.
+# Task (go-task) — optional host UX (Taskfile.yml); cluster root also pins Task
+task = "3.52.0"
