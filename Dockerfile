@@ -4,8 +4,14 @@
 # This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:
 # docker build -t fred .
 # docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name fred fred
-
-# For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
+#
+# Tooling policy (docker-mise):
+#   - Development (cluster/ubuntu-mise): `mise install` at **runtime** into /cache
+#   - Production (this file): official ruby:*-slim multi-stage — no mise (default).
+#     If you introduce mise: builder stage only + copy-out; never mise install/activate on boot.
+#
+# For a containerized dev environment, use docker-mise-cluster compose, not this file.
+# Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version
 ARG RUBY_VERSION=4.0.6
