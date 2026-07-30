@@ -1,29 +1,44 @@
 # fred
 
-Demo Rails 8 + Hotwire app for **[docker-mise-cluster](https://github.com/Ruby-on-Rails-Wizardry/docker-mise-cluster)**.
+Rails demo app for [docker-mise-cluster](https://github.com/Ruby-on-Rails-Wizardry/docker-mise-cluster).
 
-## Cluster usage
+## Host UX (like ubuntu-sample)
 
-This repo is a **git submodule** of `docker-mise-cluster` at path `fred/`.
+Uses prebuilt **`ubuntu-mise:dev`** + shared **`ubuntu-mise-cache`**.
 
-```bash
-# from cluster root
-git submodule update --init --recursive
-task setup                 # or bin/setup
-task up:fred               # or bin/compose up fred
-# via nginx: http://localhost:8080/fred/
-```
+| | |
+|--|--|
+| Dev image | `ubuntu-mise:dev` (`pull_policy: never`) |
+| Cache | `ubuntu-mise-cache` |
+| PG major | `POSTGRESQL_VERSION` in [`.mise.env`](.mise.env) (default **18**) |
 
-In this app directory, `task setup` / `task server` wrap bundle + Rails (Task pinned in `mise.toml`).
-
-Development expects the cluster Postgres/Redis services (`DATABASE_URL`, `REDIS_URL`) when run under compose.
-
-## Standalone
+### Multi-app cluster (recommended)
 
 ```bash
-bundle install
-bin/rails db:prepare
-bin/rails server
+cd ..   # cluster root
+mise install && task doctor
+cd ../ubuntu-mise && task build && cd -
+task setup
+task up:fred
+# http://localhost:8080/fred/
 ```
 
-Requires Ruby from the Gemfile (`ruby "…"`) and Node/Yarn if you run JS tests.
+### Standalone (this directory)
+
+```bash
+mise install
+# build base if needed
+task setup
+task shell
+task compose:up   # http://localhost:3000
+```
+
+### Production image (no mise)
+
+```bash
+SECRET_KEY_BASE=$(bin/rails secret) task compose:prod -- up --build
+```
+
+## Kamal
+
+Production deploy remains Kamal per app (`config/deploy.yml`) — not cluster compose.

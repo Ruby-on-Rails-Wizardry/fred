@@ -44,3 +44,7 @@ Session.vim
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# Optional machine overrides (committed defaults live in .mise.env)
+.mise.env.local
+.task/
