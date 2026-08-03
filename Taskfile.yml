@@ -123,7 +123,7 @@ tasks:
       - ./bin/compose up fred
 
   server:
-    desc: "bin/rails server on host (task server -- -p 3000)"
+    desc: "bin/rails server on host (task server -- -p 3001)"
     interactive: true
     cmds:
       - bin/rails server {{.CLI_ARGS}}

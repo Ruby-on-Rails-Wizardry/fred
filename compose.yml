@@ -4,7 +4,7 @@
 # Service name and hostname: fred
 #   cd ../../ubuntu-mise && task build
 #   docker compose up
-#   open http://localhost:3000
+#   open http://localhost:3001
 
 services:
   fred:
@@ -15,7 +15,7 @@ services:
     environment:
       CACHE_ROOT: ${CACHE_ROOT:-/cache}
       RAILS_ENV: development
-      PORT: ${PORT:-3000}
+      PORT: ${PORT:-3001}
       TZ: ${TZ:-UTC}
     volumes:
       - type: bind
@@ -27,7 +27,7 @@ services:
         source: cache
         target: /cache
     ports:
-      - "${HOST_PORT:-3000}:${PORT:-3000}"
+      - "${HOST_PORT:-3001}:${PORT:-3001}"
     stdin_open: true
     tty: true
     command: ["./bin/docker-dev-server"]
@@ -35,7 +35,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl -fsS \"http://127.0.0.1:$${PORT:-3000}/up\" >/dev/null",
+          "curl -fsS \"http://127.0.0.1:$${PORT:-3001}/up\" >/dev/null",
         ]
       interval: 10s
       timeout: 5s
